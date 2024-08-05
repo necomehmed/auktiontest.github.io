@@ -1,0 +1,606 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: #007BFF;
+    padding: 20px 0;
+    border-bottom: 2px solid #0056b3;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header .logo {
+    flex: 1;
+}
+
+header h1 {
+    margin: 0;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex: 2;
+    justify-content: center;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #dcdcdc;
+}
+
+.search {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.search input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.search button {
+    padding: 5px 10px;
+    background: #0056b3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    transition: background 0.3s;
+}
+
+.search button:hover {
+    background: #004080;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 20px;
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.auth-links a:hover {
+    color: #dcdcdc;
+}
+
+/* Login/Register Container */
+#authContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 40px 0;
+}
+
+.auth-box {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-box h2 {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 15px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+    font-size: 16px;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.input-group input[type="text"]::placeholder,
+.input-group input[type="email"]::placeholder,
+.input-group input[type="password"]::placeholder,
+.input-group textarea::placeholder {
+    color: #aaa;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    padding: 20px 0;
+    width: 100%;
+    flex: 1;
+}
+
+#appContainer {
+    display: none;
+}
+
+.auction-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* New Styles */
+.filter-sort-pagination {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.filter-sort {
+    display: flex;
+    gap: 20px;
+}
+
+.filter-btn, .sort-btn {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.filter-btn:hover, .sort-btn:hover {
+    background-color: #e6b800;
+}
+
+.pagination {
+    display: flex;
+    gap: 5px;
+}
+
+.page-btn {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.page-btn:hover {
+    background-color: #0056b3;
+}
+
+.auction-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Auctions Page Specific */
+.auctions-background .container {
+    background: url('images/auktionbilled.jpeg') no-repeat center center;
+    background-size: cover;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.item {
+    position: relative;
+    width: 300px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+}
+
+.item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.item-details {
+    padding: 15px;
+}
+
+.location {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.item h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.auction-number {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ffcc00;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Footer */
+footer {
+    background: #007BFF;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 2px solid #0056b3;
+    color: white;
+    flex-shrink: 0;
+}
+
+.product-form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-form .form-row {
+    margin-bottom: 20px;
+}
+
+.product-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.product-form input, .product-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.product-form .submit-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.product-form .submit-button:hover {
+    background-color: #218838;
+}
+
+#productMessage {
+    margin-top: 10px;
+    font-weight: bold;
+    color: green;
+}
+
+.hide-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;
+}
+
+.hide-button:hover {
+    background-color: #c82333;
+}
+
+#productImageDisplay {
+    max-width: 300px;
+    max-height: 300px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+/* Centering and sizing for the subscription payment box */
+.new-payment-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment-form {
+    width: 100%;
+}
+
+.payment-form .form-row {
+    margin-bottom: 20px;
+}
+
+.payment-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.payment-form input, .payment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.payment-form .submit-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.payment-form .submit-button:hover {
+    background-color: #0056b3;
+}
+
+#card-element {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    background-color: white;
+}
+
+#card-errors {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Styles for the subscription container */
+.subscription-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.subscription-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.subscription-plans {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.plan {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.plan.bronze {
+    border: 2px solid #cd7f32;
+}
+
+.plan.silver {
+    border: 2px solid #c0c0c0;
+}
+
+.plan.gold {
+    border: 2px solid #ffd700;
+}
+
+.plan h3 {
+    margin-top: 0;
+    color: #007BFF;
+}
+
+.plan .price {
+    font-size: 24px;
+    color: #333;
+}
+
+.plan .price span {
+    font-size: 16px;
+    color: #666;
+}
+
+.plan ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.plan ul li {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.plan label {
+    display: block;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.plan:hover {
+    transform: translateY(-5px);
+}
+
+#subscriptionMessage {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#unsubscribeSection {
+    margin-top: 20px;
+}
+
+#unsubscribeButton {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+#unsubscribeButton:hover {
+    background-color: darkred;
+}
+
+/* New Button Styles */
+.new-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.new-btn {
+    padding: 15px 30px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.new-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}

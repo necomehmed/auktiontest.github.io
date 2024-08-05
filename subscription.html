@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abonnement</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>DKAUKTION</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Hjem</a></li>
+                    <li><a href="#">Alle Auktioner</a></li>
+                    <li><a href="#">Avanceret Søgning</a></li>
+                    <li><a href="#">Kategorier</a></li>
+                    <li><a href="#">Lokationer</a></li>
+                    <li><a href="subscription.html">Abonnementer</a></li>
+                </ul>
+            </nav>
+            <div class="search">
+                <input type="text" placeholder="Søg...">
+                <button>Søg</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="subscription-container">
+                <h2>Abonner på DKAUKTION</h2>
+                <div class="subscription-plans">
+                    <div class="plan bronze">
+                        <h3>Bronze</h3>
+                        <p class="price">399 DKK <span>/md</span></p>
+                        <ul>
+                            <li>Fuld adgang til alle auktionsfunktioner</li>
+                            <li>Op til 25 auktioner</li>
+                        </ul>
+                        <label>
+                            <input type="radio" name="subscriptionPlan" value="bronze" required> Vælg Plan
+                        </label>
+                    </div>
+                    <div class="plan silver">
+                        <h3>Sølv</h3>
+                        <p class="price">999 DKK <span>/md</span></p>
+                        <ul>
+                            <li>Fuld adgang til alle auktionsfunktioner</li>
+                            <li>Op til 75 auktioner</li>
+                        </ul>
+                        <label>
+                            <input type="radio" name="subscriptionPlan" value="silver" required> Vælg Plan
+                        </label>
+                    </div>
+                    <div class="plan gold">
+                        <h3>Guld</h3>
+                        <p class="price">1999 DKK <span>/md</span></p>
+                        <ul>
+                            <li>Fuld adgang til alle auktionsfunktioner</li>
+                            <li>Ubegrænsede auktioner</li>
+                        </ul>
+                        <label>
+                            <input type="radio" name="subscriptionPlan" value="gold" required> Vælg Plan
+                        </label>
+                    </div>
+                </div>
+                <form id="subscription-form" class="payment-form">
+                    <div class="form-row">
+                        <label for="card-element">Kredit- eller Debitkort:</label>
+                        <div id="card-element" class="stripe-card-element">
+                            <!-- En Stripe Element vil blive indsat her. -->
+                        </div>
+                    </div>
+                    <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
+                    <button type="submit" class="submit-button">Abonner</button>
+                    <div id="subscriptionMessage"></div>
+                </form>
+
+                <!-- Afmeldingssektion -->
+                <div id="unsubscribeSection" style="display: none;">
+                    <button id="unsubscribeButton" class="submit-button" style="background-color: red;">Afmeld</button>
+                    <div id="unsubscribeMessage"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h1>DKAUKTION</h1>
+            <p>&copy; 2024 DKAUKTION</p>
+        </div>
+    </footer>
+
+    <script src="subscription.js"></script>
+</body>
+</html>

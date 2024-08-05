@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>DKAUKTION</h1>
+    </header>
+
+    <div id="appContainer">
+        <div class="container">
+            <h2>Products</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Product Name" required>
+                <input type="text" id="productDescription" placeholder="Product Description" required>
+                <input type="file" id="productImage" accept="image/*">
+                <input type="text" id="productImageUrl" placeholder="Image URL">
+                <button type="submit">Add Product</button>
+            </form> 
+            <div id="productMessage"></div>
+            <ul id="productList"></ul>
+        </div>
+
+        <div class="container" id="productDetailContainer" style="display: none;">
+            <h2 id="productTitle"></h2>
+            <img id="productImageDisplay" src="" alt="Product Image" style="max-width: 100%;">
+            <p id="productDescriptionText"></p>
+            <form id="bidForm">
+                <input type="text" id="bidderName" placeholder="Your Name" required>
+                <select id="bidAmount" required>
+                    <option value="" disabled selected>Select bid amount</option>
+                    ${Array.from({ length: 100 }, (_, i) => i + 1).map(amount => `<option value="${amount * 10}">${amount * 10}</option>`).join('')}
+                </select>
+                <button type="submit">Place Bid</button>
+            </form>
+            <div id="highestBidder">
+                <p>No bids yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to check if user is admin
+        function isAdmin() {
+            const username = localStorage.getItem('loggedInUser');
+            return username === 'admin';
+        }
+
+        // Display products
+        function displayProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            products.forEach(product => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${product.name}</strong> - ${product.description}`;
+                li.dataset.id = product.id;
+
+                if (isAdmin()) {
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = 'Delete';
+                    deleteButton.onclick = function() {
+                        deleteProduct(product.id);
+                    };
+                    li.appendChild(deleteButton);
+                }
+
+                li.addEventListener('click', function() {
+                    displayProductDetail(product.id);
+                });
+
+                productList.appendChild(li);
+            });
+        }
+
+        // Delete product function
+        function deleteProduct(productId) {
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products = products.filter(p => p.id != productId);
+            localStorage.setItem('products', JSON.stringify(products));
+            displayProducts();
+        }
+
+        // Display product detail and handle bidding
+        function displayProductDetail(productId) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const product = products.find(p => p.id == productId);
+
+            if (product) {
+                document.getElementById('productTitle').innerText = product.name;
+                document.getElementById('productDescriptionText').innerText = product.description;
+                document.getElementById('productImageDisplay').src = product.image;
+                document.getElementById('productDetailContainer').style.display = 'block';
+
+                const highestBidderDiv = document.getElementById('highestBidder');
+                if (product.highestBid) {
+                    highestBidderDiv.innerHTML = `<p>Highest Bid: $${product.highestBid.amount} by ${product.highestBid.bidder}</p>`;
+                } else {
+                    highestBidderDiv.innerHTML = '<p>No bids yet.</p>';
+                }
+
+                document.getElementById('bidForm').onsubmit = function(event) {
+                    event.preventDefault();
+                    const bidderName = document.getElementById('bidderName').value;
+                    const bidAmount = parseFloat(document.getElementById('bidAmount').value);
+
+                    if (!product.highestBid || bidAmount > product.highestBid.amount) {
+                        product.highestBid = {
+                            bidder: bidderName,
+                            amount: bidAmount
+                        };
+
+                        localStorage.setItem('products', JSON.stringify(products));
+
+                        highestBidderDiv.innerHTML = `<p>Highest Bid: $${product.highestBid.amount} by ${product.highestBid.bidder}</p>`;
+                        document.getElementById('bidForm').reset();
+                    } else {
+                        alert('Your bid must be higher than the current highest bid.');
+                    }
+                };
+            }
+        }
+
+        // Handle adding products
+        document.getElementById('addProductForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const productName = document.getElementById('productName').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const productImage = document.getElementById('productImage').files[0];
+            const productImageUrl = document.getElementById('productImageUrl').value;
+            const productMessage = document.getElementById('productMessage');
+
+            if (!productImage && !productImageUrl) {
+                productMessage.innerText = 'Please provide an image file or URL for the product.';
+                productMessage.style.color = 'red';
+                return;
+            }
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            const newProduct = {
+                id: Date.now(),
+                name: productName,
+                description: productDescription,
+                image: '',
+                highestBid: null
+            };
+
+            if (productImage) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newProduct.image = e.target.result;
+                    products.push(newProduct);
+                    localStorage.setItem('products', JSON.stringify(products));
+                    displayProducts();
+                    document.getElementById('addProductForm').reset();
+                    productMessage.innerText = 'Product added successfully!';
+                    productMessage.style.color = 'green';
+                };
+                reader.readAsDataURL(productImage);
+            } else if (productImageUrl) {
+                newProduct.image = productImageUrl;
+                products.push(newProduct);
+                localStorage.setItem('products', JSON.stringify(products));
+                displayProducts();
+                document.getElementById('addProductForm').reset();
+                productMessage.innerText = 'Product added successfully!';
+                productMessage.style.color = 'green';
+            }
+        });
+
+        // Initialize products display on page load
+        displayProducts();
+    </script>
+</body>
+</html>

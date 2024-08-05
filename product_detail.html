@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DKAUKTION - Produkt Detaljer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>DKAUKTION</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Hjem</a></li>
+                    <li><a href="auctions.html">Alle Auktioner</a></li>
+                    <li><a href="advanced_search.html">Avanceret Søgning</a></li>
+                    <li><a href="categories.html">Kategorier</a></li>
+                    <li><a href="locations.html">Lokationer</a></li>
+                    <li><a href="subscription.html">Abonnementer</a></li>
+                </ul>
+            </nav>
+            <div class="search">
+                <input type="text" placeholder="Søg efter alt her...">
+                <button>Søg</button>
+            </div>
+            <div class="auth-links">
+                <a href="index.html">Login/opret bruger</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="productDetailContainer">
+                <button id="backButton" class="hide-button">Tilbage</button>
+                <h2 id="productTitle"></h2>
+                <img id="productImageDisplay" src="" alt="Produktbillede" style="max-width: 100%;">
+                <p id="productDescriptionText"></p>
+                <form id="bidForm" class="payment-form">
+                    <div class="form-row">
+                        <label for="bidderName">Dit Navn:</label>
+                        <input type="text" id="bidderName" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="bidAmount">Dit Budbeløb ($):</label>
+                        <input type="number" id="bidAmount" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="card-element">Kredit- eller Debitkort:</label>
+                        <div id="card-element" class="stripe-card-element">
+                            <!-- En Stripe Element vil blive indsat her. -->
+                        </div>
+                    </div>
+                    <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
+                    <button type="submit" class="submit-button">Placér Bud og Betal</button>
+                    <div id="bidMessage"></div>
+                </form>
+                <div id="highestBidder">
+                    <p>Ingen bud endnu.</p>
+                </div>
+                <div id="successMessage" style="display: none; margin-top: 20px; color: green;">
+                    <h2>Betaling Gennemført!</h2>
+                    <p>Tak for din betaling. Dit bud er placeret med succes.</p>
+                    <img src="path/to/success-illustration.png" alt="Betaling Gennemført" style="max-width: 100%;">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h1>DKAUKTION</h1>
+            <p>&copy; 2024 DKAUKTION</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Function to get query parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const queryArray = queryString.split('&');
+            queryArray.forEach(query => {
+                const [key, value] = query.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        // Function to display product details
+        function displayProductDetails() {
+            const params = getQueryParams();
+            const productId = params.id;
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const product = products.find(p => p.id == productId);
+
+            if (product) {
+                document.getElementById('productTitle').innerText = product.name;
+                document.getElementById('productDescriptionText').innerText = product.description;
+                document.getElementById('productImageDisplay').src = product.image;
+
+                // Add more logic to handle bidding, displaying highest bidder, etc.
+            } else {
+                // Handle case where product is not found
+                document.getElementById('productDetailContainer').innerHTML = '<p>Produkt ikke fundet.</p>';
+            }
+        }
+
+        // Initialize display on page load
+        document.addEventListener('DOMContentLoaded', displayProductDetails);
+
+        // Back button functionality
+        document.getElementById('backButton').onclick = function() {
+            window.history.back();
+        };
+    </script>
+</body>
+</html>

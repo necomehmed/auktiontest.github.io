@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bidding System</h1>
+        <form id="bidForm">
+            <input type="text" id="bidderName" placeholder="Your Name" required>
+            <input type="number" id="bidAmount" placeholder="Bid Amount" min="0" step="any" required>
+            <button type="submit">Place Bid</button>
+        </form>
+        <div id="highestBidder">
+            <p>No bids yet.</p>
+        </div>
+    </div>
+    <!-- Include other JavaScript files here -->
+    <script src="signup.js"></script>
+    <!-- Include script.js last -->
+    <script src="script.js"></script>
+</body>
+</html>

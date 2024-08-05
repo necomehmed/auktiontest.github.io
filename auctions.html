@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DKAUKTION - Alle Auktioner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>DKAUKTION</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Hjem</a></li>
+                    <li><a href="auktioner.html">Alle Auktioner</a></li>
+                    <li><a href="advanced_search.html">Avanceret Søgning</a></li>
+                    <li><a href="categories.html">Kategorier</a></li>
+                    <li><a href="locations.html">Lokationer</a></li>
+                    <li><a href="subscription.html">Abonnementer</a></li>
+                </ul>
+            </nav>
+            <div class="search">
+                <input type="text" placeholder="Søg efter alt her...">
+                <button>Søg</button>
+            </div>
+            <div class="auth-links">
+                <a href="index.html">Login/opret bruger</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="auctions-background">
+        <div class="container">
+            <h1 class="auction-title">Auktioner</h1>
+            <div class="filter-sort-pagination">
+                <div class="filter-sort">
+                    <button class="filter-btn">Kategorier</button>
+                    <button class="sort-btn">Sorter</button>
+                </div>
+                <div class="pagination">
+                    <button class="page-btn">«</button>
+                    <button class="page-btn">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">»</button>
+                </div>
+            </div>
+            <div class="auction-items" id="auctionItems"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h1>DKAUKTION</h1>
+            <p>&copy; 2024 DKAUKTION</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function displayAuctions() {
+            const auctionItemsContainer = document.getElementById('auctionItems');
+            auctionItemsContainer.innerHTML = '';
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            products.forEach(product => {
+                const item = document.createElement('a');
+                item.className = 'item';
+                item.href = `product_detail.html?id=${product.id}`;
+                item.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="item-details">
+                        <p class="location">${product.location}</p>
+                        <h3>${product.name}</h3>
+                        <p class="price">${product.price} DKK</p>
+                        <p class="auction-number">Auktion nummer: ${product.auctionNumber}</p>
+                    </div>
+                    <div class="badge">${product.badge}</div>
+                `;
+                auctionItemsContainer.appendChild(item);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', displayAuctions);
+    </script>
+</body>
+</html>
